@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install Meson
-      run: sudo apt update -qq && apt install --no-install-recommends -y build-essential meson ninja-build
+      run: sudo apt update -qq && sudo apt install --no-install-recommends -y build-essential meson ninja-build
     - name: Install dependencies
       run: |
         sudo apt install --no-install-recommends -y \
