@@ -1,1 +1,0 @@
-.valaproj/examples/load.sh
