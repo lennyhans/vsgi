@@ -43,7 +43,7 @@ public class FileServerAppTests : AppTests {
             test_request.path_info = "/test_file";
             test_request.script_name = "";
             var test_response = test_app.call(test_request);
-            assert(test_response.headers["Content-Type"] == "text/plain");
+            assert(test_response.headers["Content-Type"] == "application/octet-stream");
         });
     }
 
