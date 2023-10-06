@@ -1,7 +1,16 @@
 project('com.github.ophymx.vsgi', 'vala', 'c', version: '0.0.1')
 
-add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi')],
+vapi_dir = join_paths(meson.current_source_dir(), 'vapi')
+
+add_project_arguments(['--vapidir', vapi_dir],
                       language: 'vala')
+
+common_dependencies = [
+  dependency('glib-2.0'),
+  dependency('gmodule-2.0'),
+  dependency('gee-0.8'),
+  dependency('gio-2.0')
+]
 
 api_version = '1.0'
 
@@ -38,14 +47,7 @@ libvsgi = static_library(
   'src/lib/vsgi/lib.vala' ,
   'src/lib/vsgi/request.vala' ,
   'src/lib/vsgi/response.vala',
-  dependencies: [
-    # dependency('libgda-5.0'),
-    dependency('glib-2.0'),
-    dependency('gmodule-2.0'),
-    dependency('gee-0.8'),
-    dependency('gio-2.0')
-    # dependency('libxml-2.0')
-  ],
+  dependencies: common_dependencies,
   include_directories: inc,
   install: true
 )
@@ -60,10 +62,7 @@ libvsgi_server = shared_library(
   'src/lib/vsgi-server/server.vala',
   'src/lib/vsgi-server/server_main.vala',
   dependencies: [
-    dependency('glib-2.0'),
-    dependency('gmodule-2.0'),
-    dependency('gee-0.8'),
-    dependency('gio-2.0'),
+    common_dependencies,
     libvsgi_dep
   ],
   include_directories: inc,
@@ -79,17 +78,13 @@ libvsgi_server_simple = shared_library(
   'vsgi-server-simple-'+api_version,
   'src/lib/vsgi-server-simple/simple.vala',
   # 'src/lib/vsgi/simple.vala',
-  # 'src/lib/vsgi-server-simple/simple.vala',
+  # 'src/lib/vsgi-selibfcgi0ldbl
   dependencies: [
-    dependency('gee-0.8'),
-    dependency('gio-2.0'),
+    common_dependencies,
     posix,
     libvsgi_dep,
     libvsgi_server_dep
-  ],
-  build_rpath: meson.current_build_dir(),
-  include_directories: inc,
-  install: true
+  ]
 )
 
 libvsgi_server_simple_dep = declare_dependency(
@@ -97,19 +92,18 @@ libvsgi_server_simple_dep = declare_dependency(
   link_with: libvsgi_server_simple
 )
 
-
 libvsgi_server_fcgi = shared_library(
   'vsgi-server-fcgi-'+api_version,
   'src/lib/vsgi-server-fcgi/fcgi-server.vala',
+  # 'src/lib/vsgi/simple.vala',
+  # 'src/lib/vsgi-selibfcgi0ldbl
   dependencies: [
-    dependency('gee-0.8'),
-    dependency('gio-2.0'),
-    libvsgi_dep,
-    libvsgi_server_dep,
+    common_dependencies,
     dependency('fcgi'),
-  ],
-  include_directories: inc,
-  install: true
+    posix,
+    libvsgi_dep,
+    libvsgi_server_dep
+  ]
 )
 
 libvsgi_server_fcgi_dep = declare_dependency(
