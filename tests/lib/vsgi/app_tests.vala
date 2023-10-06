@@ -21,7 +21,7 @@
  */
 public abstract class AppTests : Gee.TestCase {
 
-    public AppTests(string name) {
+    protected AppTests(string name) {
         base(name);
         add_test("[Application] call() returns valid response",
             test_valid_response);

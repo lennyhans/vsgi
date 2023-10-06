@@ -20,7 +20,7 @@
  *      Jeffrey T. Peckham <abic@ophymx.com>
  */
 
-static const string ASSETS_DIR = "tests/assets";
+const string ASSETS_DIR = "../tests/assets";
 
 int main (string[] args) {
     Test.init(ref args);

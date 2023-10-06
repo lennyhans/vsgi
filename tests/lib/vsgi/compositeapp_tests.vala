@@ -21,7 +21,7 @@
  */
 public abstract class CompositeAppTests : AppTests {
 
-    public CompositeAppTests(string name) {
+    protected CompositeAppTests(string name) {
         base(name);
     }
 
