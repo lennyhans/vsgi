@@ -35,7 +35,7 @@ public struct Status : uint {
     }
 
     public string message() {
-        switch (this) {
+        switch ((int)this) {
             /* 1XX Info */
             case 100: return "Continue";
             case 101: return "Switching Protocols";
