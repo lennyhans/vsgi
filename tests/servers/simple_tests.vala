@@ -20,17 +20,19 @@
  *      Jeffrey T. Peckham <abic@ophymx.com>
  */
 public class SimpleServerTests : ServerTests {
-
+    VSGI.Application app;
     public SimpleServerTests() {
         base("SimpleServer");
     }
 
     public override void set_up() {
-        test_server = new VSGI.SimpleServer(8080);
+        VSGI.Application app = new VSGI.Echo();
+        test_server = new VSGI.SimpleServer(app,8080);
     }
 
     public override void tear_down() {
         test_server = null;
+        app = null;
     }
 
 }

@@ -1,4 +1,4 @@
-/* tests/server_tests.vala
+/* tests/lib/vsgi/testmain.vala
  *
  * Copyright (C) 2012 Jeffrey T. Peckham
  *
@@ -19,24 +19,18 @@
  * Author:
  *      Jeffrey T. Peckham <abic@ophymx.com>
  */
-public abstract class ServerTests : Gee.TestCase {
 
-    protected ServerTests(string name) {
-        base(name);
-        add_test("[Server] can instantiate", test_instantiation);
-    }
+const string ASSETS_DIR = "../tests/assets";
 
-    protected VSGI.Server test_server;
+int main (string[] args) {
+    Test.init(ref args);
+    TestSuite tests = TestSuite.get_root();
 
-    public override void set_up() {
-    }
+    /* Server */
+    TestSuite server_tests = new TestSuite("Servers");
+    server_tests.add_suite(new SimpleServerTests().get_suite());
+    server_tests.add_suite(new FcgiServerTests().get_suite());
+    tests.add_suite(server_tests);
 
-    public override void tear_down() {
-        test_server = null;
-    }
-
-    public virtual void test_instantiation() {
-        assert(test_server != null);
-    }
-
+    return Test.run();
 }

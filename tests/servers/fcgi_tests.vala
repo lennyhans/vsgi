@@ -26,7 +26,8 @@ public class FcgiServerTests : ServerTests {
     }
 
     public override void set_up() {
-        test_server = new VSGI.FcgiServer(":5000");
+        VSGI.Application app = new VSGI.Echo();
+        test_server = new VSGI.FcgiServer(app, "./fastcgi/mysocket", 5000);
     }
 
     public override void tear_down() {
