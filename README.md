@@ -6,7 +6,7 @@ for Vala and GObject based web applications.
 
 ## Requirments
 - `valac >= 0.16` __build only__
-- `meson >= 2.3` __build only__
+- `meson >= 1.0.1` __build only__
 - `glib >= 2.32`
     - glib-2.0
     - gobject-2.0
