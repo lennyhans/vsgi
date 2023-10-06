@@ -45,12 +45,18 @@ public class FileServer : Object, Application {
         try {
             bool uncertain;
             var filename = Path.build_filename(dir, request.path_info);
-            var content_type = ContentType.guess(filename, null, out uncertain);
+            var basename = Path.get_basename(filename);
+            
+            var content_type = ContentType.guess(basename, null, out uncertain);
+            log("FileServer",
+            GLib.LogLevelFlags.LEVEL_DEBUG,
+             " > Response >  filename %s, guessed %s, uncetain %b\n",
+              basename, content_type, uncertain);
 
             if (uncertain)
-                headers["Content-Type"] = "text/plain";
-            else
-                headers["Content-Type"] = content_type;
+                message("[FileServer][call] Content-Type guess is uncertain '%s'", basename);
+            
+            headers["Content-Type"] = content_type;
 
             var file = File.new_for_path(filename);
             var file_info = file.query_info("standard::size",
